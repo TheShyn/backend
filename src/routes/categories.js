@@ -12,8 +12,8 @@ const route = express.Router()
 
 route.get('/',getAllCate)
 route.get('/:id',getDetailCate)
-route.patch('/:id',checkPermission,updateCate)
-route.delete('/:id',checkPermission,deleteProduct)
-route.post('/',checkPermission,createCate)
+route.patch('/:id',updateCate)
+route.delete('/:id',deleteProduct)
+route.post('/',createCate)
 
 export default route

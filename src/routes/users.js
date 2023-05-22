@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/',getAllUser)
 router.get('/:id',getDetailUser)
-router.delete('/:id',checkPermission,deleteUser)
-router.patch('/:id',checkPermission,updateUser)
+router.delete('/:id',deleteUser)
+router.patch('/:id',updateUser)
 
 export default router

@@ -10,7 +10,6 @@ const Product = new Schema({
         type:mongoose.Types.ObjectId,
         ref:"Categories"
     },
-    img:{type:String},
     description: {type:String}
 }, { versionKey: false })
 

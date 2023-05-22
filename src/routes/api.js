@@ -9,10 +9,10 @@ import { checkPermission } from '../middleware/checkPermission.js';
 const routerApi = express.Router();
 
 routerApi.get("/", GetAll)
-routerApi.get("/:id", checkPermission,getDetail)
-routerApi.patch("/:id", checkPermission,UpdateProduct)
-routerApi.delete("/:id", checkPermission,DeleteProduct)
-routerApi.post("/", checkPermission,AddProduct)
+routerApi.get("/:id",getDetail)
+routerApi.patch("/:id",UpdateProduct)
+routerApi.delete("/:id",DeleteProduct)
+routerApi.post("/",AddProduct)
 
 
 export default routerApi;

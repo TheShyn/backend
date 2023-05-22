@@ -4,7 +4,7 @@ import dotenv from "dotenv"
 dotenv.config()
 const connect = async function(){
     try {
-        await mongoose.connect( process.env.URI_DB + "/Web17308",{
+        await mongoose.connect( process.env.URI_DB,{
             useNewUrlParser: true,
             useUnifiedTopology: true
         })

@@ -10,7 +10,6 @@ const SchemaProduct = Joi.object({
         "number.min":"number should be > 1"
     }),
     categoryId: Joi.string().required(),
-    img:Joi.string().required(),
     description:Joi.string().required()
     
 })
