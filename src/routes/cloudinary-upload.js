@@ -1,5 +1,5 @@
 import express from 'express';
-import uploadCloud from '../config/cloudinary/cloudinary.config';
+import uploadCloud from '../middleware/upload';
 
 const router = express.Router();
 router.post('/cloudinary-upload', uploadCloud.single('file'), (req, res, next) => {

@@ -10,7 +10,13 @@ const SchemaProduct = Joi.object({
         "number.min":"number should be > 1"
     }),
     categoryId: Joi.string().required(),
-    description:Joi.string().required()
+    description:Joi.string().required(),
+    categoryId: Joi.string().required(),
+    discount: Joi.number().min(1).message({
+        "string.min": "discount should be > 1"
+    }),
+    imgs: Joi.array().required()
+
     
 })
 export default SchemaProduct

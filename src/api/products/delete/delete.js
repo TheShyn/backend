@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import connect from "../../../config/db";
 import Product from "../../../models/Product";
 import Categories from "../../../models/Categories";
+import { v2 as cloudinary } from 'cloudinary';
 
 const DeleteProduct = async (req, res) => {
     const { ObjectId } = mongoose.Types;
@@ -19,6 +20,10 @@ const DeleteProduct = async (req, res) => {
                 if (!product) {
                     return res.status(404).send({ message: "Product not found" })
                 }
+                console.log(product)
+                const arrayImg = product.imgs.map(item=>{
+                    return "products/"+item.split("/").pop().replace('.png', '');
+                })
                 await Categories.findOneAndUpdate(
                     { _id: product.categoryId },
                     { $pull: { products: product._id } },
@@ -26,6 +31,7 @@ const DeleteProduct = async (req, res) => {
                   );
 
                 const deleteProdcut = await Product.deleteOne({_id: new ObjectId(id)})
+                cloudinary.api.delete_resources(arrayImg)
                 return res.status(200).send({message: "Delete product successfully"})
             } catch (error) {
                 return res.status(500).send({ message: error })

@@ -5,14 +5,15 @@ import DeleteProduct from '../api/products/delete/delete.js';
 import getDetail from '../api/products/product.js';
 import UpdateProduct from '../api/products/update/update.js';
 import { checkPermission } from '../middleware/checkPermission.js';
+import uploadCloud from '../middleware/upload.js';
 
 const routerApi = express.Router();
 
 routerApi.get("/", GetAll)
 routerApi.get("/:id",getDetail)
-routerApi.patch("/:id",UpdateProduct)
+routerApi.patch("/:id", uploadCloud.array('imgs'),UpdateProduct)
 routerApi.delete("/:id",DeleteProduct)
-routerApi.post("/",AddProduct)
+routerApi.post("/",uploadCloud.array('imgs'),AddProduct)
 
 
 export default routerApi;

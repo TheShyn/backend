@@ -13,16 +13,19 @@ const UpdateProduct = async (req, res) => {
     const method = req.method
     const { id } = req.params
     const data = req.body
+    const files = req.files
+    const imgs = files.map(item=>item?.path)
     //check id valid
     if(!ObjectId.isValid(id)){
         return res.status(404).send({message: "Id is not a valid"})
     }
+ 
     // res.send(data)
     await connect()
     switch (method) {
         case "PATCH":
             try {
-                const {name, price, categoryId,img} = data
+                const {categoryId} = data
                 let {error} =  SchemaProduct.validate(data)
                 if(error){
                     return res.status(400).send({message:error.message});
@@ -35,22 +38,6 @@ const UpdateProduct = async (req, res) => {
                 if(!isCate) {
                     return res.status(404).send({ message: "Categories not found" });
                 }
-                
-                // console.log(img, product.img);
-                
-                // if(img !== product.img){
-                    
-                //     const oldImagePublicId = img.split('/').pop().split('.')[0];
-                //     console.log(oldImagePublicId)
-                //     cloudinaryApi.v2.uploader.destroy(oldImagePublicId, (error, result) => {
-                //         if (error) {
-                //           console.log(error);
-                //         } else {
-                //           console.log('Old image deleted:', img);
-                //         }
-                //       });
-                // }
-                
                 const productUpdate = await Product.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: data }, { new: true , useFindAndModify: false})
                 await Categories.findByIdAndUpdate(categoryId, {
                     $addToSet: {
