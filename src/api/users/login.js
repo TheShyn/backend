@@ -10,9 +10,6 @@ const Login = async (req, res) => {
     const {SECRET_CODE} = process.env
     const data = req.body
     const method = req.method
-    if (invalidFields.length > 0) {
-        return res.status(400).send({ message: `không có trường: ${invalidFields.join(", ")}` });
-    }
     await connect()
 
     switch (method) {
@@ -35,7 +32,7 @@ const Login = async (req, res) => {
                 const token = jwt.sign({ _id: user._id }, SECRET_CODE, {
                     expiresIn: "1d",
                 });
-                    
+                user.password = undefined;
                 if (user && validPass) {
                     return res.status(200).send({
                         message: "Đăng nhập thành công",
