@@ -20,9 +20,9 @@ const DeleteProduct = async (req, res) => {
                 if (!product) {
                     return res.status(404).send({ message: "Product not found" })
                 }
-                console.log(product)
-                const arrayImg = product.imgs.map(item=>{
-                    return "products/"+item.split("/").pop().replace('.png', '');
+                const arrayImg = product.imgs.map(item => {
+                    const fileName = item.split('/').pop().replace(/\.[^/.]+$/, '');
+                    return "products/" + fileName
                 })
                 await Categories.findOneAndUpdate(
                     { _id: product.categoryId },

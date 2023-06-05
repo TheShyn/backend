@@ -12,9 +12,7 @@ const SchemaProductUpdate = Joi.object({
     categoryId: Joi.string().required(),
     description:Joi.string().required(),
     categoryId: Joi.string().required(),
-    discount: Joi.number().min(1).message({
-        "string.min": "discount should be > 1"
-    }),
+    discount: Joi.number(),
     imgs: Joi.array()
 
     

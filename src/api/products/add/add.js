@@ -3,25 +3,25 @@ import Categories from "../../../models/Categories";
 import Product from "../../../models/Product";
 import SchemaProduct from "../../../validate/SchemaProduct";
 import { v2 as cloudinary } from 'cloudinary';
-const AddProduct = async (req, res) => {
-    const method = req.method
-    const data = req.body
-    const files = req.files
-    const imgs = files.map(item=>item.path)
-    const fileData = {...req.body,imgs: imgs}
-    // console.log(files)
-    
-    // console.log(data)
+const  AddProduct = async (req, res) => {
     await connect()
+    const method = req.method
+    const data = req.body    
+    console.log(data.imgs);
+    
     switch (method) {
         case 'POST':
             try {
 
-                let { error } = SchemaProduct.validate(fileData)
+                let { error } = SchemaProduct.validate(data)
+                
                 if (error) {
-                    if(files){
-                        const names = files.map((item)=>item.filename)
-                        cloudinary.api.delete_resources(names)
+                    if(data?.imgs && data.imgs.length){
+                        const arrayImg = data.imgs.map(item=>{
+                            const fileName = item.split('/').pop().replace(/\.[^/.]+$/, '');
+                            return "products/"+fileName
+                        })
+                        cloudinary.api.delete_resources(arrayImg)   
                     }
                     return res.status(400).send({ message: error.message });
 
@@ -30,18 +30,31 @@ const AddProduct = async (req, res) => {
                 
                 const product = await Product.findOne({ name })
                 if (product) {
+                    if(data?.imgs && data.imgs.length){
+                        const arrayImg = data.imgs.map(item=>{
+                            const fileName = item.split('/').pop().replace(/\.[^/.]+$/, '');
+                            return "products/"+fileName
+                        })
+                        cloudinary.api.delete_resources(arrayImg)   
+                    }
                     return res.status(400).send({ message: 'Product is exists' })
                 }
                 const isCate = await Categories.findOne({_id: categoryId})
                 if(!isCate){
+                    if(data?.imgs && data.imgs.length){
+                        const arrayImg = data.imgs.map(item=>{
+                            const fileName = item.split('/').pop().replace(/\.[^/.]+$/, '');
+                            return "products/"+fileName
+                        })
+                        cloudinary.api.delete_resources(arrayImg)   
+                    }
                     return res.status(400).send({ message: 'Cate not found' })
+                }       
+                const newData ={
+                    ...data,
+                    img:data.imgs[0]
                 }
-                const dataUpload = {
-                    ...fileData,
-                    img: imgs[0],
-                    imgs: imgs
-                }                
-                const item = await Product.create(dataUpload)
+                const item = await Product.create(newData)
                 console.log(item.name);
                 
                 await Categories.findByIdAndUpdate(item.categoryId, {
@@ -49,10 +62,19 @@ const AddProduct = async (req, res) => {
                         products: item._id,
                     },
                 });
-                return res.status(200).send({ message: "Add product successfully", data: dataUpload })
+                return res.status(200).send({ message: "Add product successfully", data: data })
 
             } catch (error) {
-
+                console.log('freking error');
+                if(data?.imgs && data.imgs.length){
+                    const arrayImg = data.imgs.map(item=>{
+                        console.log(item);
+                        const fileName = item.split('/').pop().replace(/\.[^/.]+$/, '');
+                        return "products/"+fileName
+                    })
+                    cloudinary.api.delete_resources(arrayImg)   
+                }
+                
                 return res.send({ message: error });
             }
             break;

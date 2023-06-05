@@ -2,13 +2,13 @@ import express from 'express';
 import uploadCloud from '../middleware/upload';
 
 const router = express.Router();
-router.post('/cloudinary-upload', uploadCloud.single('file'), (req, res, next) => {
-    console.log(req)
-    if (!req.file) {
+router.post('/cloudinary-upload', uploadCloud.array('files'), (req, res, next) => {
+    if (!req.files) {
         next(new Error('No file uploaded!'));
         return;
     }
 
-    res.json({ secure_url: req.file.path });
+    const secureUrls = req.files.map(file => file.path);
+    res.json({ secure_urls: secureUrls });
 });
 export default router;

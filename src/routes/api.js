@@ -11,9 +11,9 @@ const routerApi = express.Router();
 
 routerApi.get("/", GetAll)
 routerApi.get("/:id",getDetail)
-routerApi.patch("/:id", uploadCloud.array('imgs'),UpdateProduct)
+routerApi.patch("/:id", UpdateProduct)
 routerApi.delete("/:id",DeleteProduct)
-routerApi.post("/",uploadCloud.array('imgs'),AddProduct)
+routerApi.post("/", AddProduct)
 
 
 export default routerApi;
