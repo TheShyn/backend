@@ -10,9 +10,6 @@ const Login = async (req, res) => {
     const {SECRET_CODE} = process.env
     const data = req.body
     const method = req.method
-    const allowedFields = ["username", "password"];
-    const receivedFields = Object.keys(data);
-    const invalidFields = receivedFields.filter(field => !allowedFields.includes(field));
     if (invalidFields.length > 0) {
         return res.status(400).send({ message: `không có trường: ${invalidFields.join(", ")}` });
     }
@@ -25,7 +22,7 @@ const Login = async (req, res) => {
                 if(error){
                     return res.status(400).send({ message: error?.details[0].message })
                 }
-                const user = await Users.findOne({ username: data.username })
+                const user = await Users.findOne({ email: data.email })
                 if (!user) {
                     return res.status(400).send({ message: "user not found" });
                 }

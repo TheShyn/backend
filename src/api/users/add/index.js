@@ -5,7 +5,7 @@ import { signupSchema } from "../../../validate/SchemaSignup";
 const AddUser = async (req, res) => {
 
     const method = req.method
-    const { name, username, password } = req.body
+    const { name, email, password } = req.body
     await connect()
     switch (method) {
         case "POST":
@@ -15,7 +15,7 @@ const AddUser = async (req, res) => {
                     return res.status(400).send({message:error.message});
 
                 }
-                const userExists = await Users.findOne({ username });
+                const userExists = await Users.findOne({ email });
                 if (userExists) {
                     return res.status(409).json({
                         message: "User already exists",
@@ -24,10 +24,10 @@ const AddUser = async (req, res) => {
                 }
                 
                 const hashedPassword = await bcrypt.hash(password, 10);
-                // return res.send('dasdas')
+                
                 const user = await Users.create({
                     name,
-                    username,
+                    email,
                     password: hashedPassword,
                     role: "user"
                 });
