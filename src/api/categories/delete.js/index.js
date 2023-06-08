@@ -20,10 +20,10 @@ const deleteProduct = async function (req, res) {
                     })
                 }
                 
-                await Product.updateMany({categoryId:id},{$set:{categoryId:'642f40c18d53ccc72a3af5d8'}})
-                const updateProduct = await Product.find({ categoryId: "642f40c18d53ccc72a3af5d8" });
+                await Product.updateMany({categoryId:id},{$set:{categoryId:'64353bbc9399e5feceb2f103'}})
+                const updateProduct = await Product.find({ categoryId: "64353bbc9399e5feceb2f103" });
                 const updatedProductIds = updateProduct.map((product) => product._id.toString());
-                await Categories.findByIdAndUpdate('642f40c18d53ccc72a3af5d8', {
+                await Categories.findByIdAndUpdate('64353bbc9399e5feceb2f103', {
                     $addToSet: {
                         products: updatedProductIds,
                     },

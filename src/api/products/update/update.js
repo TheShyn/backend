@@ -1,7 +1,6 @@
 import connect from "../../../config/db"
 import Product from "../../../models/Product"
 import mongoose from "mongoose"
-import SchemaProduct from "../../../validate/SchemaProduct";
 import Categories from "../../../models/Categories";
 import dotenv from 'dotenv'
 import SchemaProductUpdate from "../../../validate/SchemaProductUpdate";

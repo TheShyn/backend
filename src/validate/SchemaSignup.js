@@ -11,7 +11,7 @@ export const signupSchema = Joi.object({
     //   "string.empty": "Please enter your username",
     //   "string.min": "Name must be at least 6 characters"
     // }),
-    password: Joi.string().required().min(6).messages({
+    password: Joi.string().required().min(4).messages({
       "string.empty": "Password is not empty",
       "any.required": "Password is required",
       "string.min": "Password must have at least {#limit} characters",

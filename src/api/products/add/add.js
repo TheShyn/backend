@@ -6,9 +6,7 @@ import { v2 as cloudinary } from 'cloudinary';
 const  AddProduct = async (req, res) => {
     await connect()
     const method = req.method
-    const data = req.body    
-    console.log(data.imgs);
-    
+    const data = req.body        
     switch (method) {
         case 'POST':
             try {

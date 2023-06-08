@@ -19,7 +19,7 @@ const Login = async (req, res) => {
                 if(error){
                     return res.status(400).send({ message: error?.details[0].message })
                 }
-                const user = await Users.findOne({ email: data.email })
+                const user = await Users.findOne({ email: data.email }).populate("cart");
                 if (!user) {
                     return res.status(400).send({ message: "user not found" });
                 }
