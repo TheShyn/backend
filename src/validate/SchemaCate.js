@@ -5,5 +5,6 @@ export const cateSchema = Joi.object({
       "string.empty": "Please enter your username",
       "string.min": "Name must be at least 4 characters"
     }),
-    products:Joi.array()
+    products:Joi.array(),
+    status: Joi.string()
   });

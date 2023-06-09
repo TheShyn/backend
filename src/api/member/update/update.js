@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Users from "../../../models/Users";
 import connect from "../../../config/db";
 import { MemberSchema } from "../../../validate/SchemaMember.js";
+import FeedBack from "../../../models/FeedBack";
 
 
 const updateUser = async(req,res)=>{
@@ -30,6 +31,11 @@ const updateUser = async(req,res)=>{
                 }
                 
                 const cateUpdate = await Users.findOneAndUpdate({ _id: id }, { $set: obj }, { new: true, useFindAndModify: false })
+                if(obj.status === "disabled"){
+                    await FeedBack.updateMany({user:id}, {status: "disabled"})
+                }else{
+                    await FeedBack.updateMany({user:id}, {status: "enabled"})
+                }
                 return res.status(200).json({
                     message:"Update users successfully",
                     data: cateUpdate

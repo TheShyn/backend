@@ -15,7 +15,10 @@ const AddCmt = async (req, res) => {
                     return res.status(400).send({ message: error.message });
                 }
                 const comment = await FeedBack.create(data)
-                return res.status(200).send(comment)
+                return res.status(200).send({
+                    message:"add comment to feedback", 
+                    data: comment
+                })
             } catch (error) {
                 return res.status(500).send({message:error, connect:false})
             }

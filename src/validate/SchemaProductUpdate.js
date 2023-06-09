@@ -13,7 +13,8 @@ const SchemaProductUpdate = Joi.object({
     description:Joi.string().required(),
     categoryId: Joi.string().required(),
     discount: Joi.number(),
-    imgs: Joi.array()
+    imgs: Joi.array(),
+    status: Joi.string()
 
     
 })

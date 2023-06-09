@@ -21,4 +21,5 @@ export const signupSchema = Joi.object({
       "string.empty": "Confirm password is not empty",
       "string.required": "Confirm password is required",
     }),
+    status: Joi.string()
   });

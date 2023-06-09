@@ -77,6 +77,10 @@ const UpdateProduct = async (req, res) => {
                         imgs: imgs
                     }
                 }
+                const checkCate = await Categories.findOne({_id: data.categoryId})
+                if(checkCate.status === 'disabled' && data.status === "enabled") {
+                    return res.status(400).send({ message: "This category is disable now. Change your category before you update" });
+                }
                 const productUpdate = await Product.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: data }, { new: true, useFindAndModify: false })
                 await Categories.findByIdAndUpdate(categoryId, {
                     $addToSet: {

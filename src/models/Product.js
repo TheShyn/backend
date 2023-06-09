@@ -14,6 +14,7 @@ const Product = new Schema({
     discount: {type: Number , default: 0},
     img: {type:String},
     imgs: {type:Array},
+    status: {type:String, default: "enabled"},
 }, { versionKey: false })
 
 

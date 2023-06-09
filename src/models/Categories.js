@@ -7,7 +7,8 @@ const categoriesSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref:'Product'
         }
-    ]
+    ],
+    status: { type: String, default:"enabled" },
 }, {
     timestamps: true,
     versionKey: false,

@@ -23,7 +23,10 @@ const Login = async (req, res) => {
                 if (!user) {
                     return res.status(400).send({ message: "user not found" });
                 }
-                
+                if(user.status === 'disabled'){
+                    return res.status(400).send({ message: "your account got ban" });
+
+                }
                 const validPass = await bcrypt.compare(data.password, user.password);
                 // const validPass = await bcrypt.compare(user.password, data.password)
                 if (!validPass) {

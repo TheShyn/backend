@@ -18,7 +18,8 @@ const SchemaProduct = Joi.object({
     imgs: Joi.array().required().min(1).message({
         'array.base': 'You should be uploading images',
         'array.min': 'You should be uploading images',
-    })
+    }),
+    status: Joi.string()
 
 
 })

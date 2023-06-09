@@ -15,7 +15,7 @@ const getCmtOfProduct = async (req, res) => {
                     return res.status(400).send({ message: "Product not found" });
                 }
                 const comment = await FeedBack.find({product:id})
-                if(!comment.length){
+                if(!comment){
                     return res.status(400).send({ message: "Chưa có đánh giá" });
                     
                 }
